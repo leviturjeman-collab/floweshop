@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f4ecdf">
+  <meta name="description" content="חי עציץ ופרח, בוטיק פרחים בעכו. זרי פרחים, סידורים, זרי כלה ומתנות. יהושפט 22, עכו.">
+  <title>חי עציץ ופרח | פרחים לאנשים שאוהבים</title>
+  <link rel="icon" href="assets/logo.jpg">
+  <link rel="stylesheet" href="assets/fonts.css">
+  <link rel="stylesheet" href="assets/montserrat.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="catalog.js" defer></script>
+  <script src="app.js" defer></script>
+  <script src="studio.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">דילוג לתוכן</a>
+<header class="site-header">
+  <a class="logo" href="#" aria-label="חי עציץ ופרח, דף הבית"><img src="assets/logo.jpg" width="78" height="78" alt="חי עציץ ופרח — Flower Boutique"></a>
+  <nav id="navigation" aria-label="ניווט ראשי">
+    <a href="#/products">המוצרים שלנו</a><a href="#/studio" lang="en">The Studio</a><a href="#occasions">חתונות ואירועים</a><a href="#about">הסיפור שלנו</a><a href="#contact">דברו איתנו</a>
+  </nav>
+  <a class="header-phone" href="tel:+97249811888"><span>נדבר בפרחים</span><bdi>04-9811888</bdi></a>
+  <button class="menu-button" aria-expanded="false" aria-controls="navigation">תפריט <span aria-hidden="true">☰</span></button>
+</header>
+<main id="main">
+<div id="home">
+  <section class="hero">
+    <div class="hero-copy">
+      <svg class="hero-sprig" viewBox="0 0 180 110" fill="none" aria-hidden="true" focusable="false">
+        <path d="M12 98C66 87 111 59 164 12M65 80L67 54M91 66L88 37M113 48L119 20M135 32L152 31" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <g fill="currentColor">
+          <path d="M95 65Q114 53 137 67Q116 73 95 65ZM113 48Q133 36 158 42Q139 54 113 48ZM134 33Q144 12 171 7Q159 28 134 33ZM118 25Q113 9 126 1Q128 15 118 25ZM89 49Q74 35 81 20Q95 30 89 49ZM68 69Q51 55 57 43Q72 49 68 69ZM72 77Q89 70 106 83Q86 86 72 77Z"/>
+          <ellipse cx="67" cy="51" rx="3.6" ry="5.5"/><ellipse cx="88" cy="34" rx="3.4" ry="5.5"/>
+        </g>
+      </svg>
+      <h1>יופי שמרגישים.</h1>
+      <p class="hero-intro">פרחים שנבחרים בקפידה, ונשזרים באהבה.</p>
+      <a class="button primary" href="#/products">לבחירת זר <svg class="hero-chevron" viewBox="0 0 12 20" fill="none" aria-hidden="true"><path d="M10 2L2 10L10 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <img class="hero-background" src="assets/hero-textured.png" alt="סידור פרחים לבנים באגרטל פנים פיסולי על אבן טבעית" fetchpriority="high" width="1586" height="992">
+    <a class="hero-location" href="#contact">יהושפט 22, עכו</a>
+  </section>
+  <section class="collection section" id="collection">
+    <div class="collection-heading"><div><h2>הזרים שלנו</h2><div class="gold-rule" aria-hidden="true"></div><p>פרחים לכל רגע, ולכל מי שאוהבים.</p></div><a class="text-link" href="https://www.instagram.com/hai.atzitz.vaperah/" target="_blank" rel="noopener">עוד מהבוטיק <span aria-hidden="true">↗</span></a></div>
+    <div class="filter-row" role="group" aria-label="סינון מוצרים">
+      <button data-filter="all" aria-pressed="true">כל הפרחים</button>
+      <button data-filter="bouquets" aria-pressed="false">זרי פרחים</button>
+      <button data-filter="arrangements" aria-pressed="false">סידורי פרחים</button>
+      <button data-filter="bridal" aria-pressed="false">זרי כלה</button>
+      <button data-filter="gifts" aria-pressed="false">מארזי פרחים</button>
+    </div>
+    <div class="products" id="products"></div>
+    <p class="collection-note">בחרו את הזר, גלו את הצבעים ומצאו את המחווה שלכם.</p>
+  </section>
+  <section class="occasions section" id="occasions">
+    <div class="occasion-intro"><span class="eyebrow">כל רגע והפרחים שלו</span><h2>קצת יותר<br>מזר פרחים.</h2><p>יום הולדת, חתונה, חג או פשוט כי מתחשק.<br>נרכיב יחד את הפרטים שעושים שמח.</p></div>
+    <div class="service-list">
+      <a href="#/product/bridal"><span>זרי כלה</span><small>פרחים לרגע של פעם בחיים</small><b aria-hidden="true">←</b></a>
+      <a data-service="קישוט רכב לחתונה" href="#contact"><span>קישוטי רכב</span><small>הדרך שלכם אל היום הגדול</small><b aria-hidden="true">←</b></a>
+      <a data-service="זר לראש" href="#contact"><span>זרים לראש</span><small>כתר קטן של פריחה</small><b aria-hidden="true">←</b></a>
+      <a data-service="בלונים" href="#contact"><span>בלונים</span><small>עוד קצת צבע לחגיגה</small><b aria-hidden="true">←</b></a>
+      <a data-service="דובים ושוקולדים" href="#contact"><span>דובים ושוקולדים</span><small>משהו מתוק ליד הפרחים</small><b aria-hidden="true">←</b></a>
+    </div>
+  </section>
+  <section class="about section" id="about">
+    <p class="eyebrow">נשזר באהבה, בעכו</p>
+    <h2>הפרחים הם הדרך שלנו<br>להגיד את מה שמרגישים.</h2>
+    <p>בבוטיק חי עציץ ופרח תמצאו זרים, סידורי פרחים ומתנות.<br>אנחנו כאן כדי לבחור איתכם את הצבע, הסגנון והפרטים הקטנים.</p>
+    <a class="text-link" href="https://www.instagram.com/hai.atzitz.vaperah/" target="_blank" rel="noopener">הצצה לעולם שלנו באינסטגרם ↗</a>
+  </section>
+  <section class="contact section" id="contact">
+    <div><p class="eyebrow">נעים להכיר</p><h2>ניפגש בין הפרחים.</h2><p>יהושפט 22, עכו</p><a class="text-link" href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x151dc85140d7b21d:0xa4c49c20b776be37" target="_blank" rel="noopener">לניווט לחנות ↗</a></div>
+    <div class="contact-details"><h3>איזה זר נשזור לכם?</h3><p>להזמנות, משלוחים ושעות פעילות, דברו איתנו.</p><div class="phones"><a href="tel:+97249811888"><bdi>04-9811888</bdi></a><a href="tel:+972543060049"><bdi>054-3060049</bdi></a></div><a class="button primary" href="https://wa.me/972543060049" target="_blank" rel="noopener">בואו נדבר ב־WhatsApp <span aria-hidden="true">←</span></a></div>
+  </section>
+</div>
+<section id="product-page" class="product-page section" hidden aria-labelledby="product-title">
+  <a href="#/products" class="back-link">→ חזרה לכל הזרים</a>
+  <div class="product-layout">
+    <div class="product-gallery">
+      <button class="gallery-main" id="zoom-open" aria-label="הגדלת תמונת המוצר"><span id="main-photo" class="atlas" role="img"></span><span class="zoom-label">להגדלה +</span></button>
+      <div id="angle-thumbs" class="angle-thumbs" role="group" aria-label="בחירת זווית צילום"></div>
+      <p id="view-caption" class="view-caption" aria-live="polite"></p>
+    </div>
+    <div class="product-info">
+      <p class="eyebrow" id="product-category"></p>
+      <h1 id="product-title"></h1><div class="gold-rule" aria-hidden="true"></div>
+      <p id="product-description" class="product-description"></p>
+      <fieldset class="variant-field"><legend>בחרו את הצבע שלכם</legend><div id="variant-options" class="variant-options"></div></fieldset>
+      <p class="selected-color" aria-live="polite">הבחירה שלכם: <strong id="color-name"></strong></p>
+      <label class="note-label" for="gift-note">משהו שחשוב לכם שנדע? <span>(לא חובה)</span></label><textarea id="gift-note" rows="2" maxlength="500" placeholder="למי הזר, מועד רצוי או בקשה מיוחדת"></textarea>
+      <a id="order-link" class="button primary order-link" target="_blank" rel="noopener">לבדיקת זמינות והזמנה <span aria-hidden="true">←</span></a>
+      <p class="order-note">מחיר, גודל, הרכב הפרחים ומשלוח בתיאום עם הבוטיק.</p>
+      <details><summary>על הצבעים והתמונות</summary><p>התמונות הן הדמיות המבוססות על עבודות הבוטיק. הצבעים והזוויות נוצרו להמחשה. זמינות הגוונים והרכב הפרחים כפופים לעונה ולאישור החנות.</p></details>
+      <details><summary>טיפול בזר</summary><p>הניחו במקום קריר ומוצל, הרחק משמש ישירה. החליפו מים בקביעות והסירו עלים שנמצאים מתחת לקו המים. לפרחים במארז בקשו מאיתנו הוראות טיפול מתאימות.</p></details>
+      <a class="product-call" href="tel:+97249811888">מעדיפים לדבר? <bdi>04-9811888</bdi></a>
+    </div>
+  </div>
+</section>
+<section id="studio-page" class="studio-page section" hidden aria-labelledby="studio-title">
+<a href="#" class="back-link">→ חזרה לדף הבית</a>
+<p class="eyebrow">ניצור יחד משהו אישי</p><h1 id="studio-title" lang="en">The Studio</h1>
+<p class="studio-intro">הזר שלכם, בדרך שלכם. בחרו סגנון, גוונים וגודל — ונשזור יחד את הפרטים.</p>
+<div class="studio-layout"><div class="studio-visual"><span id="studio-photo" class="atlas" role="img"></span><p id="studio-reference"></p><small>התמונה מציגה את הסגנון והגוון הראשי בלבד. שילוב הגוונים והזר הסופי יתואמו עם הבוטיק.</small></div>
+<form id="studio-form"><label for="studio-type">סגנון הפרחים</label><select id="studio-type" name="type"></select>
+<fieldset><legend>הגוון שלכם <small>בחרו גוון אחד או את כל הגוונים</small></legend><button id="studio-all-colors" class="studio-all-colors" type="button" aria-pressed="false">בחירת כל הגוונים</button><div id="studio-colors" class="studio-colors"></div></fieldset>
+<fieldset><legend>גודל רצוי</legend><div class="studio-sizes"><label><input type="radio" name="size" value="קטן ועדין"> קטן ועדין</label><label><input type="radio" name="size" value="בינוני" checked> בינוני</label><label><input type="radio" name="size" value="גדול ומרשים"> גדול ומרשים</label></div></fieldset>
+<label for="studio-occasion">לאיזה רגע?</label><select id="studio-occasion" name="occasion"><option>פשוט לשמח</option><option>יום הולדת</option><option>יום נישואין</option><option>חתונה</option><option>תודה מכל הלב</option><option>אירוע אחר</option></select>
+<label for="studio-budget">תקציב משוער בש״ח <small>(לא חובה)</small></label><input id="studio-budget" name="budget" type="number" min="0" step="1" placeholder="התקציב שלכם">
+<label for="studio-notes">מה עוד תרצו להוסיף?</label><textarea id="studio-notes" name="notes" rows="3" maxlength="800" placeholder="פרחים אהובים, עטיפה, מועד רצוי או הקדשה..."></textarea>
+<div id="studio-summary" class="studio-summary" aria-live="polite"></div>
+<a id="studio-send" class="button primary" target="_blank" rel="noopener">שליחת העיצוב לבוטיק <span aria-hidden="true">←</span></a>
+<p class="order-note">זו בקשה להתאמה אישית. מחיר, זמינות הפרחים, הגוונים והמשלוח יאושרו בשיחה עם הבוטיק.</p>
+</form></div></section>
+</main>
+<footer><a class="footer-brand" href="#">חי עציץ ופרח<small>FLOWER BOUTIQUE</small></a><span>פרחים לאנשים שאוהבים.</span><a href="https://www.instagram.com/hai.atzitz.vaperah/" target="_blank" rel="noopener">Instagram ↗</a><a href="#contact">יצירת קשר</a></footer>
+<dialog id="zoom-dialog" aria-label="תמונת מוצר מוגדלת"><button class="close-zoom" aria-label="סגירה">×</button><div id="zoom-photo" class="atlas" role="img"></div><div class="zoom-controls"><button id="previous-view" aria-label="זווית קודמת">→</button><span id="zoom-caption" aria-live="polite"></span><button id="next-view" aria-label="זווית הבאה">←</button></div></dialog>
+<noscript><p class="section">לצפייה בגלריות ובבחירת צבעים יש להפעיל JavaScript. להזמנות: <a href="tel:+97249811888">04-9811888</a>.</p></noscript>
+<a class="whatsapp-float" href="https://wa.me/972543060049" target="_blank" rel="noopener" aria-label="דברו איתנו בוואטסאפ"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><path d="M20.5 11.8a8.5 8.5 0 0 1-12.6 7.5L3 20.6l1.3-4.7A8.5 8.5 0 1 1 20.5 11.8Z" stroke="currentColor" stroke-width="1.7"/><path d="M8.2 7.3c-.7.2-1 1-1 1.7 0 2.5 4 6.5 6.7 6.5.8 0 1.8-.5 1.9-1.3l-2.3-1.2-.9 1c-1.6-.6-2.9-1.9-3.5-3.4l1-1-1.1-2.3Z" fill="currentColor"/></svg><span>WhatsApp</span></a>
+</body>
+</html>
+

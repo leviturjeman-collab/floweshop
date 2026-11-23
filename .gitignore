@@ -1,0 +1,13 @@
+/*
+!/.gitignore
+!/README.md
+!/package.json
+!/atelier/
+/atelier/references/
+/atelier/*prompts*.json
+/atelier/generated-assets.json
+*.log
+*.pid
+node_modules/
+.env
+.env.*
