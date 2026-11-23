@@ -19,3 +19,29 @@
  colors.addEventListener('input',event=>{if(event.target.matches('input[name=color]')){allSelected=false;previewId=event.target.value;}});
  type.addEventListener('change',renderColors);form.addEventListener('input',update);form.addEventListener('submit',e=>e.preventDefault());renderColors();
 })();
+
+// Searchable flower-style dropdown; the select remains the form's source of truth.
+(() => {
+ const select=document.getElementById('studio-type');
+ const products=window.ATELIER_PRODUCTS;
+ const wrapper=document.createElement('div');wrapper.className='style-picker';
+ wrapper.innerHTML=`<button type="button" id="style-trigger" class="style-trigger" aria-expanded="false" aria-controls="style-panel"><span class="style-trigger-name"></span><svg viewBox="0 0 20 12" aria-hidden="true"><path d="m2 2 8 8 8-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="style-panel" class="style-panel" hidden><div class="style-search-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m15 15 6 6" stroke="currentColor" stroke-width="1.6"/></svg><input id="style-search" type="search" placeholder="חיפוש סגנון" aria-label="חיפוש סגנון" role="combobox" aria-autocomplete="list" aria-controls="style-list" aria-expanded="false" autocomplete="off"></div><div id="style-list" class="style-list" role="listbox" aria-label="סגנון הפרחים"></div><p class="style-empty" hidden role="status">לא נמצאו סגנונות מתאימים</p></div>`;
+ select.after(wrapper);select.hidden=true;
+ document.querySelector('label[for="studio-type"]').htmlFor='style-trigger';
+ const trigger=wrapper.querySelector('.style-trigger');const panel=wrapper.querySelector('.style-panel');const search=wrapper.querySelector('input');const list=wrapper.querySelector('.style-list');let visible=[];let active=-1;
+ function render(){const q=search.value.trim().toLocaleLowerCase();visible=products.filter(p=>(p.name+' '+p.subtitle+' '+p.categoryName).toLocaleLowerCase().includes(q));active=visible.findIndex(p=>p.id===select.value);
+ list.innerHTML=visible.map(p=>`<div id="style-option-${p.id}" class="style-option" role="option" aria-selected="${p.id===select.value}" data-value="${p.id}"><span class="style-thumb"><span class="atlas" style="background-image:url('${p.variants[0].image}');background-position:0% 0%" aria-hidden="true"></span></span><span class="style-option-name">${p.name}</span><span class="style-check" aria-hidden="true">✓</span></div>`).join('');wrapper.querySelector('.style-empty').hidden=visible.length>0;highlight(false);}
+ function highlight(scroll=true){list.querySelectorAll('.style-option').forEach((row,i)=>row.classList.toggle('keyboard-active',i===active));if(active>=0){search.setAttribute('aria-activedescendant','style-option-'+visible[active].id);if(scroll)document.getElementById('style-option-'+visible[active].id).scrollIntoView({block:'nearest'});}else search.removeAttribute('aria-activedescendant');}
+ function sync(){const p=products.find(p=>p.id===select.value);trigger.querySelector('span').textContent=p.name;trigger.setAttribute('aria-label','סגנון הפרחים: '+p.name);}
+ function close(focus=false){panel.hidden=true;trigger.setAttribute('aria-expanded','false');search.setAttribute('aria-expanded','false');if(focus)trigger.focus();}
+ function open(){search.value='';render();panel.hidden=false;trigger.setAttribute('aria-expanded','true');search.setAttribute('aria-expanded','true');search.focus();}
+ function choose(id){select.value=id;select.dispatchEvent(new Event('change',{bubbles:true}));sync();close(true);}
+ trigger.addEventListener('click',()=>panel.hidden?open():close());
+ trigger.addEventListener('keydown',e=>{if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();open();}});
+ search.addEventListener('input',render);
+ search.addEventListener('keydown',e=>{if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();if(visible.length){active=(active+(e.key==='ArrowDown'?1:-1)+visible.length)%visible.length;highlight();}}else if(e.key==='Home'||e.key==='End'){e.preventDefault();active=e.key==='Home'?0:visible.length-1;highlight();}else if(e.key==='Enter'){e.preventDefault();if(visible[active])choose(visible[active].id);}});
+ list.addEventListener('click',e=>{const row=e.target.closest('[data-value]');if(row)choose(row.dataset.value);});
+ wrapper.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();close(true);}});
+ wrapper.addEventListener('focusout',()=>setTimeout(()=>{if(!wrapper.contains(document.activeElement))close();},0));
+ document.addEventListener('pointerdown',e=>{if(!wrapper.contains(e.target))close();});window.addEventListener('hashchange',()=>close());select.addEventListener('change',sync);sync();
+})();
