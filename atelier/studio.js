@@ -31,15 +31,27 @@
  const trigger=wrapper.querySelector('.style-trigger');const panel=wrapper.querySelector('.style-panel');const search=wrapper.querySelector('input');const list=wrapper.querySelector('.style-list');let visible=[];let active=-1;
  function render(){const q=search.value.trim().toLocaleLowerCase();visible=products.filter(p=>(p.name+' '+p.subtitle+' '+p.categoryName).toLocaleLowerCase().includes(q));active=visible.findIndex(p=>p.id===select.value);
  list.innerHTML=visible.map(p=>`<div id="style-option-${p.id}" class="style-option" role="option" aria-selected="${p.id===select.value}" data-value="${p.id}"><span class="style-thumb"><span class="atlas" style="background-image:url('${p.variants[0].image}');background-position:0% 0%" aria-hidden="true"></span></span><span class="style-option-name">${p.name}</span><span class="style-check" aria-hidden="true">✓</span></div>`).join('');wrapper.querySelector('.style-empty').hidden=visible.length>0;highlight(false);}
- function highlight(scroll=true){list.querySelectorAll('.style-option').forEach((row,i)=>row.classList.toggle('keyboard-active',i===active));if(active>=0){search.setAttribute('aria-activedescendant','style-option-'+visible[active].id);if(scroll)document.getElementById('style-option-'+visible[active].id).scrollIntoView({block:'nearest'});}else search.removeAttribute('aria-activedescendant');}
+ function highlight(scroll=true){list.querySelectorAll('.style-option').forEach((row,i)=>row.classList.toggle('keyboard-active',i===active));if(active>=0){search.setAttribute('aria-activedescendant','style-option-'+visible[active].id);if(scroll){const row=document.getElementById('style-option-'+visible[active].id);const top=row.offsetTop;if(top<list.scrollTop)list.scrollTop=top;else if(top+row.offsetHeight>list.scrollTop+list.clientHeight)list.scrollTop=top+row.offsetHeight-list.clientHeight;}}else search.removeAttribute('aria-activedescendant');}
  function sync(){const p=products.find(p=>p.id===select.value);trigger.querySelector('span').textContent=p.name;trigger.setAttribute('aria-label','סגנון הפרחים: '+p.name);}
- function close(focus=false){panel.hidden=true;trigger.setAttribute('aria-expanded','false');search.setAttribute('aria-expanded','false');if(focus)trigger.focus();}
- function open(){search.value='';render();panel.hidden=false;trigger.setAttribute('aria-expanded','true');search.setAttribute('aria-expanded','true');search.focus();}
+ function close(focus=false){panel.hidden=true;trigger.setAttribute('aria-expanded','false');search.setAttribute('aria-expanded','false');if(focus)trigger.focus({preventScroll:true});}
+ function positionPanel(){
+ if(panel.hidden)return;
+ const r=trigger.getBoundingClientRect();const viewport=window.visualViewport;
+ const top=viewport?viewport.offsetTop:0;const height=viewport?viewport.height:window.innerHeight;
+ const below=top+height-r.bottom-12;const above=r.top-top-12;
+ const upwards=below<230&&above>below;const available=Math.max(100,Math.min(480,upwards?above:below));
+ panel.style.position='fixed';panel.style.insetInline='auto';panel.style.left=Math.max(8,r.left)+'px';panel.style.width=Math.min(r.width,document.documentElement.clientWidth-16)+'px';
+ panel.style.top=(upwards?Math.max(top+8,r.top-available-6):r.bottom+6)+'px';panel.style.maxHeight=available+'px';
+ }
+ function open(keyboard=false){search.value='';render();panel.hidden=false;trigger.setAttribute('aria-expanded','true');search.setAttribute('aria-expanded','true');positionPanel();if(keyboard||matchMedia('(min-width:721px) and (pointer:fine)').matches)search.focus({preventScroll:true});}
+ window.addEventListener('resize',positionPanel);window.addEventListener('scroll',positionPanel,{passive:true});
+ window.visualViewport?.addEventListener('resize',positionPanel);window.visualViewport?.addEventListener('scroll',positionPanel);
  function choose(id){select.value=id;select.dispatchEvent(new Event('change',{bubbles:true}));sync();close(true);}
  trigger.addEventListener('click',()=>panel.hidden?open():close());
- trigger.addEventListener('keydown',e=>{if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();open();}});
+ trigger.addEventListener('keydown',e=>{if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();open(true);}});
  search.addEventListener('input',render);
  search.addEventListener('keydown',e=>{if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();if(visible.length){active=(active+(e.key==='ArrowDown'?1:-1)+visible.length)%visible.length;highlight();}}else if(e.key==='Home'||e.key==='End'){e.preventDefault();active=e.key==='Home'?0:visible.length-1;highlight();}else if(e.key==='Enter'){e.preventDefault();if(visible[active])choose(visible[active].id);}});
+ list.addEventListener('pointerdown',e=>{if(e.target.closest('[data-value]'))e.preventDefault();});
  list.addEventListener('click',e=>{const row=e.target.closest('[data-value]');if(row)choose(row.dataset.value);});
  wrapper.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();close(true);}});
  wrapper.addEventListener('focusout',()=>setTimeout(()=>{if(!wrapper.contains(document.activeElement))close();},0));

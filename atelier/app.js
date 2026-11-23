@@ -100,3 +100,13 @@
  buttons[1].addEventListener('click',()=>move(-1));
  document.querySelector('.filter-row').addEventListener('click',()=>{rail.scrollLeft=0;});
 })();
+
+// Dismiss mobile navigation without shifting the document.
+(() => {
+ const header=document.querySelector('.site-header');const nav=document.getElementById('navigation');const toggle=document.querySelector('.menu-button');
+ function close(){nav.classList.remove('open');toggle.setAttribute('aria-expanded','false');}
+ document.addEventListener('pointerdown',e=>{if(!header.contains(e.target))close();});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&nav.classList.contains('open')){close();toggle.focus({preventScroll:true});}});
+ nav.addEventListener('click',e=>{if(e.target.closest('a'))close();});
+ matchMedia('(max-width:720px)').addEventListener('change',close);
+})();
