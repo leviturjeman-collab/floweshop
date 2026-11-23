@@ -95,10 +95,36 @@
  controls.innerHTML='<button type="button" aria-label="מוצרים קודמים">→</button><span>גלו את הקולקציה</span><button type="button" aria-label="מוצרים הבאים">←</button>';
  rail.after(controls);
  const buttons=controls.querySelectorAll('button');
- function move(direction){const card=rail.querySelector('.product-card');if(!card)return;const gap=parseFloat(getComputedStyle(rail).gap)||28;rail.scrollBy({left:direction*(card.getBoundingClientRect().width+gap),behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});}
+ // RTL scrolling runs from zero (first) to a negative maximum (last).
+ const tolerance=3;
+ function limits(){const max=Math.max(0,rail.scrollWidth-rail.clientWidth);return {max,position:Math.min(max,Math.max(0,-rail.scrollLeft))};}
+ function move(direction){
+  const card=rail.querySelector('.product-card');if(!card)return;
+  const {max,position}=limits();if(max<=tolerance)return;
+  const gap=parseFloat(getComputedStyle(rail).columnGap)||0;
+  const wrap=direction<0?position>=max-tolerance:position<=tolerance;
+  const target=wrap?(direction<0?0:max):Math.min(max,Math.max(0,position-direction*(card.getBoundingClientRect().width+gap)));
+  rail.scrollTo({left:-target,behavior:wrap||matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+ }
  buttons[0].addEventListener('click',()=>move(1));
  buttons[1].addEventListener('click',()=>move(-1));
- document.querySelector('.filter-row').addEventListener('click',()=>{rail.scrollLeft=0;});
+ // Preserve native swiping. Only wrap an outward swipe that STARTED at an edge.
+ let touch=null;
+ rail.addEventListener('touchstart',event=>{
+  if(event.touches.length!==1){touch=null;return;}
+  const point=event.touches[0];const {max,position}=limits();
+  touch={x:point.clientX,y:point.clientY,first:position<=tolerance,last:position>=max-tolerance,max};
+ },{passive:true});
+ rail.addEventListener('touchend',event=>{
+  if(!touch)return;const start=touch;touch=null;const point=event.changedTouches[0];if(!point||start.max<=tolerance)return;
+  const dx=point.clientX-start.x,dy=point.clientY-start.y;
+  if(Math.abs(dx)<45||Math.abs(dx)<Math.abs(dy)*1.5)return;
+  if(start.last&&dx>0)rail.scrollTo({left:0,behavior:'instant'});
+  else if(start.first&&dx<0)rail.scrollTo({left:-start.max,behavior:'instant'});
+ },{passive:true});
+ rail.addEventListener('touchcancel',()=>{touch=null;},{passive:true});
+ document.querySelector('.filter-row').addEventListener('click',()=>{touch=null;rail.scrollTo({left:0,behavior:'instant'});});
+
 })();
 
 // Dismiss mobile navigation without shifting the document.
