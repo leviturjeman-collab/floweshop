@@ -1,1 +1,10 @@
-{"name":"floweshop","version":"1.0.0","private":true,"scripts":{"start":"npm --prefix atelier start","check":"node --check atelier/app.js && node --check atelier/studio.js && node --check atelier/server.mjs"}}
+{
+  "name": "floweshop",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npm --prefix atelier start",
+    "check": "node --check atelier/app.js && node --check atelier/studio.js && node --check atelier/server.mjs",
+    "build": "node build.mjs"
+  }
+}
